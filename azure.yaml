@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://azuresdkreleasepreview.blob.core.windows.net/azd/schema/azure.yaml.json
+
+name: FuncAzdTemplate
+services:
+  web:
+    project: src/web
+    dist: build
+    language: js
+    host: appservice
+  api:
+    project: src/api
+    language: csharp
+    host: appservice
