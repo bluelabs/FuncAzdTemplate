@@ -67,7 +67,7 @@ public class ListsFunctions
 
     [Function("UpdateList")]
     public async Task<HttpResponseData> UpdateList(
-       [HttpTrigger(AuthorizationLevel.Function, "put", Route = "lists/{list_id}")] HttpRequestData req, string list_id, string name, string? description)
+       [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "lists/{list_id}")] HttpRequestData req, string list_id, string name, string? description)
  
     {
         var response = req.CreateResponse(HttpStatusCode.OK);
@@ -92,7 +92,7 @@ public class ListsFunctions
 
     [Function("DeleteList")]
     public async Task<HttpResponseData> DeleteList(
-            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "lists/{list_id}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "lists/{list_id}")]
         HttpRequestData req, string list_id)
     {
         var response = req.CreateResponse(HttpStatusCode.NoContent);
@@ -107,7 +107,7 @@ public class ListsFunctions
 
     [Function("GetListItems")]
     public async Task<HttpResponseData> GetListItems(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "lists/{list_id}/items/{skip:int?}/{batchSize:int?}")]
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "lists/{list_id}/items/{skip:int?}/{batchSize:int?}")]
         HttpRequestData req, string list_id, int? skip, int? batchSize)
     {
         var response = req.CreateResponse(HttpStatusCode.OK);
@@ -126,7 +126,7 @@ public class ListsFunctions
 
     [Function("CreateListItem")]
     public async Task<HttpResponseData> CreateListItem(
-           [HttpTrigger(AuthorizationLevel.Function, "post", Route = "lists/{list_id}/items")] HttpRequestData req, string list_id, string name, string? state, string? description)
+           [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "lists/{list_id}/items")] HttpRequestData req, string list_id, string name, string? state, string? description)
     {
         var response = req.CreateResponse(HttpStatusCode.Created);
         response.Headers.Add("Content-Type", "application/json; charset=utf-8");
@@ -156,7 +156,7 @@ public class ListsFunctions
 
     [Function("GetListItem")]
     public async Task <HttpResponseData> GetListItem(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "lists/{list_id}/items/{item_id}")] HttpRequestData req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "lists/{list_id}/items/{item_id}")] HttpRequestData req,
         string item_id, string list_id)
     {
         var response = req.CreateResponse(HttpStatusCode.OK);
@@ -175,7 +175,7 @@ public class ListsFunctions
 
     [Function("UpdateListItem")]
     public async Task <HttpResponseData> UpdateListItem(
-       [HttpTrigger(AuthorizationLevel.Function, "put", Route = "lists/{list_id}/items/{item_id}")]
+       [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "lists/{list_id}/items/{item_id}")]
        HttpRequestData req, string list_id, string item_id, string name, string? description,
        string state, string? completedDate, string? dueDate)
     {
@@ -206,7 +206,7 @@ public class ListsFunctions
 
     [Function("DeleteListItem")]
     public async Task<HttpResponseData> DeleteListItem(
-            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "lists/{list_id}/items/{item_id}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "lists/{list_id}/items/{item_id}")]
         HttpRequestData req, string item_id, string list_id)
     {
         var response = req.CreateResponse(HttpStatusCode.NoContent);
@@ -222,13 +222,8 @@ public class ListsFunctions
 
     [Function("GetListItemsByState")]
     public async Task<HttpResponseData> GetListItemsByState(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "lists/{list_id}/state/{state}/{skip:int?}/{batchSize:int?}")]
-        HttpRequestData req, string list_id,
-        [CosmosDBInput(databaseName: "%AZURE_COSMOS_DATABASE_NAME%",
-                           collectionName: "%ListsCollectionName%",
-                           ConnectionStringSetting = "AZURE_COSMOS_ENDPOINT",
-                           Id ="{list_id}",
-                           PartitionKey ="{list_id}")] TodoList todoList, string state, int? skip = null, int? batchSize = null)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "lists/{list_id}/state/{state}/{skip:int?}/{batchSize:int?}")]
+        HttpRequestData req, string list_id, string state, int? skip = null, int? batchSize = null)
     {
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "application/json; charset=utf-8");

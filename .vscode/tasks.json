@@ -11,7 +11,7 @@
             "label": "API dotnet run",
             "detail": "Helper task--use 'Start API' task to ensure environment is set up correctly",
             "type": "func",
-            "command": "host start",
+            "command": "host start --port 3100 --cors *",
             "options": {
                 "cwd": "${workspaceFolder}/src/api/"
             },

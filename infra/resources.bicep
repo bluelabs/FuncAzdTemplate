@@ -58,7 +58,7 @@ resource api 'Microsoft.Web/sites@2021-03-01' = {
       'FUNCTIONS_EXTENSION_VERSION': '~4'
       'FUNCTIONS_WORKER_RUNTIME': 'dotnet-isolated'
       'SCM_DO_BUILD_DURING_DEPLOYMENT': 'true'
-      'AZURE_COSMOS_CONNECTION_STRING_KEY': 'AZURE-COSMOS-CONNECTION-STRING'
+      'AZURE_COSMOS_ENDPOINT': cosmos.properties.documentEndpoint
       'AZURE_COSMOS_DATABASE_NAME': cosmos::database.name
       'AZURE_KEY_VAULT_ENDPOINT': keyVault.properties.vaultUri
     }
@@ -295,7 +295,6 @@ resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
     ]
   }
 }
-
  
 
 output AZURE_COSMOS_ENDPOINT string = cosmos.properties.documentEndpoint
@@ -304,3 +303,4 @@ output AZURE_KEY_VAULT_ENDPOINT string = keyVault.properties.vaultUri
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = applicationInsightsResources.outputs.APPLICATIONINSIGHTS_CONNECTION_STRING
 output WEB_URI string = 'https://${web.properties.defaultHostname}'
 output API_URI string = 'https://${api.properties.defaultHostName}'
+output FUNCTIONS_WORKER_RUNTIME string = api::appSettings.properties['FUNCTIONS_WORKER_RUNTIME']
