@@ -12,28 +12,19 @@
             },
         },
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
             "name": "Debug API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build (functions)",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/api/bin/Debug/net6.0/ToDo.Api.dll",
-            "args": "${input:funcArgs}",
+            "program": "func",
+            "args": [
+                "host",
+                "start"
+            ],
             "cwd": "${workspaceFolder}/src/api",
-            "stopAtEntry": false,
-            
-            "env": {
-                "CLI_DEBUG": "1"
-
-            },
             "console": "internalConsole",
+            "stopAtEntry": false,
             "envFile": "${input:dotEnvFilePath}"
         },
-       
-
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
@@ -45,14 +36,6 @@
             "id": "dotEnvFilePath",
             "type": "command",
             "command": "azure-dev.commands.getDotEnvFilePath"
-        },
-        {
-            "id": "funcArgs",
-            "type": "promptString",
-            "description": "Args to pass to the 'func' command",
-            "default": "--host 127.0.0.1 --port 50000 --grpcMaxMessageLength 2147483647"
         }
     ]
 }
-
-//--host 127.0.0.1 --port 56280 --workerId ac637197-4578-4b0a-acfc-03f7cec7c0d5 --requestId 39394ff9-5ecb-46a5-94d0-1c605154cd03 --grpcMaxMessageLength 2147483647"
