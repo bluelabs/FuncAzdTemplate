@@ -3,6 +3,8 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using System.Threading.Tasks;
+using System;
 
 namespace SimpleTodo.Api;
 public class ListsFunctions

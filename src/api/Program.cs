@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleTodo.Api;
 using Azure.Identity;
+using System.Threading.Tasks;
+using System;
 
 namespace SimpleTodo.Api;
 class Program

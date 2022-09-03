@@ -24,17 +24,17 @@ resource api 'Microsoft.Web/sites@2021-03-01' = {
   tags: union(tags, {
       'azd-service-name': 'api'
     })
-  kind: 'functionapp,linux'
+  kind: 'functionapp'
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      numberOfWorkers: 1
-      linuxFxVersion: 'DOTNET-ISOLATED|7.0'
-      alwaysOn: false
-      functionAppScaleLimit: 200
-      minimumElasticInstanceCount: 0
+      //numberOfWorkers: 1
+      //linuxFxVersion: 'DOTNET-ISOLATED|6.0'
+      //alwaysOn: false
+      //functionAppScaleLimit: 200
+      //minimumElasticInstanceCount: 0
       ftpsState: 'FtpsOnly'
-      use32BitWorkerProcess: false
+      //use32BitWorkerProcess: false
       cors: {
         allowedOrigins: [
           'https://ms.portal.azure.com'
@@ -42,7 +42,7 @@ resource api 'Microsoft.Web/sites@2021-03-01' = {
         ]
       }
     }
-    clientAffinityEnabled: false
+    //clientAffinityEnabled: false
     httpsOnly: true
   }
 
@@ -57,10 +57,13 @@ resource api 'Microsoft.Web/sites@2021-03-01' = {
       'AzureWebJobsStorage': 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storage.listKeys().keys[0].value}'
       'FUNCTIONS_EXTENSION_VERSION': '~4'
       'FUNCTIONS_WORKER_RUNTIME': 'dotnet-isolated'
-      'SCM_DO_BUILD_DURING_DEPLOYMENT': 'true'
+      //'SCM_DO_BUILD_DURING_DEPLOYMENT': 'true'
       'AZURE_COSMOS_ENDPOINT': cosmos.properties.documentEndpoint
       'AZURE_COSMOS_DATABASE_NAME': cosmos::database.name
       'AZURE_KEY_VAULT_ENDPOINT': keyVault.properties.vaultUri
+      //'WEBSITE_RUN_FROM_PACKAGE': '1'
+      'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING':'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storage.listKeys().keys[0].value}'
+      'WEBSITE_CONTENTSHARE': 'app-api-${resourceToken}'
     }
   }
 
@@ -95,12 +98,10 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   sku: {
     name: 'Y1'
     tier: 'Dynamic'
-    size: 'Y1'
-    family: 'Y'
+    
   }
-  kind: 'functionapp'
   properties: {
-    reserved: true
+    
   }
 }
 

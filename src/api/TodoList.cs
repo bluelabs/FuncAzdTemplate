@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 
 namespace SimpleTodo.Api;
@@ -18,7 +19,7 @@ public class TodoList
     public string? Description { get; set; }
     
     [JsonPropertyName("createdDate")]
-    public DateTimeOffset CreatedDate { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset CreatedDate { get; set; } = System.DateTimeOffset.UtcNow;
     
     [JsonPropertyName("updatedDate")]
     public DateTimeOffset? UpdatedDate { get; set; }
